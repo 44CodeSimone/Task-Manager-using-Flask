@@ -1,4 +1,6 @@
 import os
+import logging
+from logging.handlers import SysLogHandler
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -14,10 +16,28 @@ if os.environ.get('TESTING') == '1':
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
 
+
+def configure_syslog_logger():
+    logger = logging.getLogger('task_manager_security')
+    logger.setLevel(logging.INFO)
+
+    if not logger.handlers:
+        syslog_handler = SysLogHandler(address='/dev/log')
+        formatter = logging.Formatter(
+            'TaskManagerFlask[%(process)d]: %(levelname)s - %(message)s'
+        )
+        syslog_handler.setFormatter(formatter)
+        logger.addHandler(syslog_handler)
+
+    return logger
+
+
+security_logger = configure_syslog_logger()
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'login' 
+login_manager.login_view = 'login'
 login_manager.login_message_category = 'danger'
 
 bcrypt = Bcrypt(app)
