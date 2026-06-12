@@ -2,36 +2,33 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
-  build:
-    name: Tests and SonarQube Scan
+  test-security-docker:
+    name: Tests, SAST and Docker Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
           cache: pip
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
+          pip install bandit
 
-      - name: Run unit tests with coverage
-        run: pytest --cov-report=xml
+      - name: Run tests
+        run: pytest
 
-      - name: SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - name: Run Bandit
+        run: bandit -r todo_project -ll
+
+      - name: Build Docker image
+        run: docker build -t task-manager-flask .
