@@ -1,0 +1,1021 @@
+Run started:2026-06-12 00:27:46.566253+00:00
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'test-secret-key'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/conftest.py:5:11
+4	os.environ['TESTING'] = '1'
+5	os.environ['SECRET_KEY'] = 'test-secret-key'
+6	
+
+--------------------------------------------------
+>> Issue: [B107:hardcoded_password_default] Possible hardcoded password: 'secret123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
+   Location: todo_project/tests/conftest.py:35:4
+34	def make_user(app):
+35	    def _make_user(username='tester', password='secret123'):
+36	        hashed = bcrypt.generate_password_hash(password).decode('utf-8')
+37	        user = User(username=username, password=hashed)
+38	        db.session.add(user)
+39	        db.session.commit()
+40	        return user
+41	    return _make_user
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'secret123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: todo_project/tests/conftest.py:46:4
+45	def auth_client(client, make_user):
+46	    make_user(username='tester', password='secret123')
+47	    client.post('/login', data={'username': 'tester', 'password': 'secret123'},
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'secret123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/conftest.py:47:54
+46	    make_user(username='tester', password='secret123')
+47	    client.post('/login', data={'username': 'tester', 'password': 'secret123'},
+48	                follow_redirects=True)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:19:4
+18	    resp = auth_client.get('/account')
+19	    assert resp.status_code == 200
+20	    assert b'tester' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:20:4
+19	    assert resp.status_code == 200
+20	    assert b'tester' in resp.data
+21	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:26:4
+25	                            follow_redirects=True)
+26	    assert resp.status_code == 200
+27	    assert b'Username Updated Successfully' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:27:4
+26	    assert resp.status_code == 200
+27	    assert b'Username Updated Successfully' in resp.data
+28	    assert User.query.filter_by(username='renamed').first() is not None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:28:4
+27	    assert b'Username Updated Successfully' in resp.data
+28	    assert User.query.filter_by(username='renamed').first() is not None
+29	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:34:4
+33	                            follow_redirects=True)
+34	    assert resp.status_code == 200
+35	    assert b'Username Updated Successfully' not in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:35:4
+34	    assert resp.status_code == 200
+35	    assert b'Username Updated Successfully' not in resp.data
+36	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:39:4
+38	def test_change_password_get(auth_client):
+39	    assert auth_client.get('/account/change_password').status_code == 200
+40	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'secret123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_account_routes.py:44:8
+43	    resp = auth_client.post('/account/change_password', data={
+44	        'old_password': 'secret123', 'new_password': 'brandnew'},
+45	        follow_redirects=True)
+46	    assert b'Password Changed Successfully' in resp.data
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'brandnew'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_account_routes.py:44:37
+43	    resp = auth_client.post('/account/change_password', data={
+44	        'old_password': 'secret123', 'new_password': 'brandnew'},
+45	        follow_redirects=True)
+46	    assert b'Password Changed Successfully' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:46:4
+45	        follow_redirects=True)
+46	    assert b'Password Changed Successfully' in resp.data
+47	    user = User.query.filter_by(username='tester').first()
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:48:4
+47	    user = User.query.filter_by(username='tester').first()
+48	    assert bcrypt.check_password_hash(user.password, 'brandnew')
+49	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'wrongold'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_account_routes.py:53:8
+52	    resp = auth_client.post('/account/change_password', data={
+53	        'old_password': 'wrongold', 'new_password': 'brandnew'},
+54	        follow_redirects=True)
+55	    assert b'Please Enter Correct Password' in resp.data
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'brandnew'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_account_routes.py:53:36
+52	    resp = auth_client.post('/account/change_password', data={
+53	        'old_password': 'wrongold', 'new_password': 'brandnew'},
+54	        follow_redirects=True)
+55	    assert b'Please Enter Correct Password' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:55:4
+54	        follow_redirects=True)
+55	    assert b'Please Enter Correct Password' in resp.data
+56	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:60:4
+59	    resp = client.get('/this-route-does-not-exist')
+60	    assert resp.status_code == 404
+61	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:65:4
+64	    resp = app.test_client().get('/_force_403')
+65	    assert resp.status_code == 403
+66	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_account_routes.py:73:8
+72	        resp = app.test_client().get('/_force_500')
+73	        assert resp.status_code == 500
+74	    finally:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:5:4
+4	def test_about_pages_ok(client):
+5	    assert client.get('/').status_code == 200
+6	    assert client.get('/about').status_code == 200
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:6:4
+5	    assert client.get('/').status_code == 200
+6	    assert client.get('/about').status_code == 200
+7	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:11:4
+10	    resp = client.get('/register')
+11	    assert resp.status_code == 200
+12	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:16:29
+15	    resp = client.post('/register', data={
+16	        'username': 'fresh', 'password': 'pw', 'confirm_password': 'pw'},
+17	        follow_redirects=True)
+18	    assert resp.status_code == 200
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:16:47
+15	    resp = client.post('/register', data={
+16	        'username': 'fresh', 'password': 'pw', 'confirm_password': 'pw'},
+17	        follow_redirects=True)
+18	    assert resp.status_code == 200
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:18:4
+17	        follow_redirects=True)
+18	    assert resp.status_code == 200
+19	    assert User.query.filter_by(username='fresh').first() is not None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:19:4
+18	    assert resp.status_code == 200
+19	    assert User.query.filter_by(username='fresh').first() is not None
+20	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:25:28
+24	    client.post('/register', data={
+25	        'username': 'dupe', 'password': 'pw', 'confirm_password': 'pw'})
+26	    assert User.query.filter_by(username='dupe').count() == 1
+27	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:25:46
+24	    client.post('/register', data={
+25	        'username': 'dupe', 'password': 'pw', 'confirm_password': 'pw'})
+26	    assert User.query.filter_by(username='dupe').count() == 1
+27	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:26:4
+25	        'username': 'dupe', 'password': 'pw', 'confirm_password': 'pw'})
+26	    assert User.query.filter_by(username='dupe').count() == 1
+27	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:30:4
+29	def test_login_get(client):
+30	    assert client.get('/login').status_code == 200
+31	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mypassword'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: todo_project/tests/test_auth_routes.py:34:4
+33	def test_login_success(client, make_user):
+34	    make_user(username='loginuser', password='mypassword')
+35	    resp = client.post('/login', data={
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'mypassword'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:36:33
+35	    resp = client.post('/login', data={
+36	        'username': 'loginuser', 'password': 'mypassword'},
+37	        follow_redirects=True)
+38	    assert resp.status_code == 200
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:38:4
+37	        follow_redirects=True)
+38	    assert resp.status_code == 200
+39	    assert b'Login Successfull' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:39:4
+38	    assert resp.status_code == 200
+39	    assert b'Login Successfull' in resp.data
+40	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mypassword'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: todo_project/tests/test_auth_routes.py:43:4
+42	def test_login_wrong_password(client, make_user):
+43	    make_user(username='loginuser', password='mypassword')
+44	    resp = client.post('/login', data={
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'wrong'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:45:33
+44	    resp = client.post('/login', data={
+45	        'username': 'loginuser', 'password': 'wrong'},
+46	        follow_redirects=True)
+47	    assert b'Login Unsuccessful' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:47:4
+46	        follow_redirects=True)
+47	    assert b'Login Unsuccessful' in resp.data
+48	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'whatever'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_auth_routes.py:52:29
+51	    resp = client.post('/login', data={
+52	        'username': 'ghost', 'password': 'whatever'},
+53	        follow_redirects=True)
+54	    assert b'Login Unsuccessful' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:54:4
+53	        follow_redirects=True)
+54	    assert b'Login Unsuccessful' in resp.data
+55	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:59:4
+58	    resp = auth_client.get('/logout')
+59	    assert resp.status_code == 302
+60	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:64:4
+63	    resp = auth_client.get('/register')
+64	    assert resp.status_code == 302
+65	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:69:4
+68	    resp = auth_client.get('/login')
+69	    assert resp.status_code == 302
+70	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_auth_routes.py:75:8
+74	        resp = client.get(route)
+75	        assert resp.status_code == 302
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:16:31
+15	    form = _form(app, RegistrationForm, {
+16	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'pw'})
+17	    assert not form.errors
+18	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:16:49
+15	    form = _form(app, RegistrationForm, {
+16	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'pw'})
+17	    assert not form.errors
+18	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:17:4
+16	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'pw'})
+17	    assert not form.errors
+18	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:22:31
+21	    form = _form(app, RegistrationForm, {
+22	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'other'})
+23	    assert 'confirm_password' in form.errors
+24	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'other'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:22:49
+21	    form = _form(app, RegistrationForm, {
+22	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'other'})
+23	    assert 'confirm_password' in form.errors
+24	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:23:4
+22	        'username': 'newuser', 'password': 'pw', 'confirm_password': 'other'})
+23	    assert 'confirm_password' in form.errors
+24	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:28:26
+27	    form = _form(app, RegistrationForm, {
+28	        'username': 'ab', 'password': 'pw', 'confirm_password': 'pw'})
+29	    assert 'username' in form.errors
+30	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:28:44
+27	    form = _form(app, RegistrationForm, {
+28	        'username': 'ab', 'password': 'pw', 'confirm_password': 'pw'})
+29	    assert 'username' in form.errors
+30	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:29:4
+28	        'username': 'ab', 'password': 'pw', 'confirm_password': 'pw'})
+29	    assert 'username' in form.errors
+30	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:35:29
+34	    form = _form(app, RegistrationForm, {
+35	        'username': 'taken', 'password': 'pw', 'confirm_password': 'pw'})
+36	    assert 'username' in form.errors
+37	    assert any('Exists' in m for m in form.username.errors)
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'pw'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:35:47
+34	    form = _form(app, RegistrationForm, {
+35	        'username': 'taken', 'password': 'pw', 'confirm_password': 'pw'})
+36	    assert 'username' in form.errors
+37	    assert any('Exists' in m for m in form.username.errors)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:36:4
+35	        'username': 'taken', 'password': 'pw', 'confirm_password': 'pw'})
+36	    assert 'username' in form.errors
+37	    assert any('Exists' in m for m in form.username.errors)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:37:4
+36	    assert 'username' in form.errors
+37	    assert any('Exists' in m for m in form.username.errors)
+38	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:41:50
+40	def test_login_form_requires_fields(app):
+41	    form = _form(app, LoginForm, {'username': '', 'password': ''})
+42	    assert 'username' in form.errors
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:42:4
+41	    form = _form(app, LoginForm, {'username': '', 'password': ''})
+42	    assert 'username' in form.errors
+43	    assert 'password' in form.errors
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:43:4
+42	    assert 'username' in form.errors
+43	    assert 'password' in form.errors
+44	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:51:8
+50	        form = UpdateUserInfoForm(meta={'csrf': False})
+51	        assert form.validate()
+52	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:60:8
+59	        form = UpdateUserInfoForm(meta={'csrf': False})
+60	        assert not form.validate()
+61	        assert any('Exists' in m for m in form.username.errors)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:61:8
+60	        assert not form.validate()
+61	        assert any('Exists' in m for m in form.username.errors)
+62	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:65:43
+64	def test_update_user_password_requires_fields(app):
+65	    form = _form(app, UpdateUserPassword, {'old_password': '', 'new_password': ''})
+66	    assert 'old_password' in form.errors
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: todo_project/tests/test_forms.py:65:63
+64	def test_update_user_password_requires_fields(app):
+65	    form = _form(app, UpdateUserPassword, {'old_password': '', 'new_password': ''})
+66	    assert 'old_password' in form.errors
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:66:4
+65	    form = _form(app, UpdateUserPassword, {'old_password': '', 'new_password': ''})
+66	    assert 'old_password' in form.errors
+67	    assert 'new_password' in form.errors
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:67:4
+66	    assert 'old_password' in form.errors
+67	    assert 'new_password' in form.errors
+68	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:72:4
+71	    form = _form(app, TaskForm, {'task_name': ''})
+72	    assert 'task_name' in form.errors
+73	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:77:4
+76	    form = _form(app, TaskForm, {'task_name': 'Do something'})
+77	    assert not form.errors
+78	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_forms.py:82:4
+81	    form = _form(app, UpdateTaskForm, {'task_name': 'Changed'})
+82	    assert not form.errors
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:7:4
+6	    user = make_user(username='alice')
+7	    assert repr(user) == "User('alice')"
+8	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:16:4
+15	
+16	    assert task.content == 'Write tests'
+17	    assert task.user_id == user.id
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:17:4
+16	    assert task.content == 'Write tests'
+17	    assert task.user_id == user.id
+18	    assert task.author == user
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:18:4
+17	    assert task.user_id == user.id
+18	    assert task.author == user
+19	    assert user.tasks == [task]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:19:4
+18	    assert task.author == user
+19	    assert user.tasks == [task]
+20	    assert repr(task) == f"Task('Write tests', '{task.date_posted}', '{user.id}')"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:20:4
+19	    assert user.tasks == [task]
+20	    assert repr(task) == f"Task('Write tests', '{task.date_posted}', '{user.id}')"
+21	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:28:4
+27	    db.session.commit()
+28	    assert task.date_posted is not None
+29	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:34:4
+33	    loaded = load_user(str(user.id))
+34	    assert loaded is not None
+35	    assert loaded.id == user.id
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:35:4
+34	    assert loaded is not None
+35	    assert loaded.id == user.id
+36	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_models.py:39:4
+38	def test_load_user_unknown_returns_none(app):
+39	    assert load_user('99999') is None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:11:4
+10	def test_add_task_get(auth_client):
+11	    assert auth_client.get('/add_task').status_code == 200
+12	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:17:4
+16	                            follow_redirects=True)
+17	    assert resp.status_code == 200
+18	    assert b'Task Created' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:18:4
+17	    assert resp.status_code == 200
+18	    assert b'Task Created' in resp.data
+19	    assert Task.query.filter_by(content='Buy milk').first() is not None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:19:4
+18	    assert b'Task Created' in resp.data
+19	    assert Task.query.filter_by(content='Buy milk').first() is not None
+20	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:24:4
+23	    auth_client.post('/add_task', data={'task_name': ''}, follow_redirects=True)
+24	    assert Task.query.count() == 0
+25	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:30:4
+29	    resp = auth_client.get('/all_tasks')
+30	    assert resp.status_code == 200
+31	    assert b'Task A' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:31:4
+30	    assert resp.status_code == 200
+31	    assert b'Task A' in resp.data
+32	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:38:4
+37	                            data={'task_name': 'New content'}, follow_redirects=True)
+38	    assert resp.status_code == 200
+39	    assert db.session.get(Task, task.id).content == 'New content'
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:39:4
+38	    assert resp.status_code == 200
+39	    assert db.session.get(Task, task.id).content == 'New content'
+40	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:45:4
+44	    resp = auth_client.get(f'/all_tasks/{task.id}/update_task')
+45	    assert resp.status_code == 200
+46	    assert b'Prefill me' in resp.data
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:46:4
+45	    assert resp.status_code == 200
+46	    assert b'Prefill me' in resp.data
+47	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:53:4
+52	                            data={'task_name': 'Same content'}, follow_redirects=True)
+53	    assert b'No Changes Made' in resp.data
+54	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:59:4
+58	                            data={'task_name': 'x'})
+59	    assert resp.status_code == 404
+60	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:65:4
+64	    resp = auth_client.get(f'/all_tasks/{task.id}/delete_task')
+65	    assert resp.status_code == 302
+66	    assert db.session.get(Task, task.id) is None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:66:4
+65	    assert resp.status_code == 302
+66	    assert db.session.get(Task, task.id) is None
+67	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: todo_project/tests/test_task_routes.py:71:4
+70	    resp = auth_client.get('/all_tasks/9999/delete_task')
+71	    assert resp.status_code == 404
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 527
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 98
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 28
+		High: 70
+Files skipped (0):
