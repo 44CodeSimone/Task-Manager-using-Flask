@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -10,6 +10,7 @@ jobs:
   test-security-docker:
     name: Tests, SAST and Docker Build
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,3 +33,68 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t task-manager-flask .
+
+
+
+  review-environment:
+
+    name: Review Environment
+
+    runs-on: ubuntu-latest
+
+    needs: test-security-docker
+
+    if: github.event_name == 'pull_request'
+
+    environment:
+
+      name: review-${{ github.event.pull_request.number }}
+
+
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+
+
+      - name: Build review Docker image
+
+        run: docker build -t task-manager-flask-review .
+
+
+
+      - name: Start review environment
+
+        run: |
+
+          docker run -d --name task-manager-review -p 5000:5000 task-manager-flask-review
+
+          sleep 10
+
+          curl -f http://localhost:5000
+
+
+  stage-deploy-and-dast:
+    name: Stage Deploy and DAST
+    runs-on: ubuntu-latest
+    needs: test-security-docker
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: stage
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build stage Docker image
+        run: docker build -t task-manager-flask-stage .
+
+      - name: Deploy to stage environment
+        run: |
+          docker run -d --name task-manager-stage -p 5000:5000 task-manager-flask-stage
+          sleep 10
+          curl -f http://localhost:5000
+
+      - name: Run OWASP ZAP Baseline Scan on stage
+        run: |
+          docker run --rm --network host ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:5000 -r zap-stage-report.html || true
